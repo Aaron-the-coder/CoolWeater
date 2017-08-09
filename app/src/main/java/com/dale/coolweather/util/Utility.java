@@ -3,6 +3,8 @@ package com.dale.coolweather.util;
 import com.dale.coolweather.db.City;
 import com.dale.coolweather.db.County;
 import com.dale.coolweather.db.Province;
+import com.dale.coolweather.db.WeatherBean;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,5 +92,16 @@ public class Utility {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static WeatherBean handleWeatherResponse(String response){
+        Gson gson = new Gson();
+        try {
+            WeatherBean weatherBean = gson.fromJson(response, WeatherBean.class);
+            return weatherBean;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

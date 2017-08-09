@@ -2,6 +2,8 @@ package com.dale.coolweather.fragment;
 
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -74,6 +76,11 @@ public class ChooseAreaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT > 21) {
+            View decorView = getActivity().getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
         View view = inflater.inflate(R.layout.fragment_choose_area, container, false);
         ButterKnife.bind(this, view);
         initView();
@@ -109,6 +116,7 @@ public class ChooseAreaFragment extends Fragment {
         ivBack.setVisibility(View.GONE);
         provinceList = (ArrayList<Province>) DataSupport.findAll(Province.class);
         if (provinceList.size() > 0) {
+            tvTitle.setText("中国");
             dataList.clear();
             //数据库查询成功更新UI
 //            provinceList = (ArrayList<Province>) provinces;
@@ -135,6 +143,7 @@ public class ChooseAreaFragment extends Fragment {
         }
         cityList = (ArrayList<City>) DataSupport.where("provinceId = ?", String.valueOf(id)).find(City.class);
         if (cityList.size() > 0) {
+            tvTitle.setText(selectedProvince.getName());
             dataList.clear();
             //数据库查询成功更新UI
 //            cityList = (ArrayList<City>) cities;
@@ -161,6 +170,7 @@ public class ChooseAreaFragment extends Fragment {
         }
         countyList = (ArrayList<County>) DataSupport.where("cityId = ?", String.valueOf(id)).find(County.class);
         if (countyList.size() > 0) {
+            tvTitle.setText(selectedCity.getName());
             dataList.clear();
             //数据库查询成功更新UI
 //            countyList = (ArrayList<County>) counties;

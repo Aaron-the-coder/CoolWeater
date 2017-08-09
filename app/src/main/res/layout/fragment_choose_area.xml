@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/title"
+            android:textColor="@android:color/white"
             android:textSize="20sp" />
     </RelativeLayout>
 
